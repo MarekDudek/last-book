@@ -12,6 +12,10 @@ public final class Score {
 
     public static final Score ZERO = new Score(0);
 
+    public Score increasedBy(final Score added) {
+	return new Score(points + added.points);
+    }
+
     @Override
     public int hashCode() {
 	return Objects.hashCode(points);

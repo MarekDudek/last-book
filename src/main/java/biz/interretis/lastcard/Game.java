@@ -26,4 +26,10 @@ public class Game {
     public Score score(final Player player) {
 	return scores.get(player);
     }
+
+    public void addPoints(final Player player, final Score addedPoints) {
+	final Score currentScore = scores.get(player);
+	final Score newScore = currentScore.increasedBy(addedPoints);
+	scores.put(player, newScore);
+    }
 }
