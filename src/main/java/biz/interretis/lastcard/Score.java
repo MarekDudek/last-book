@@ -6,6 +6,10 @@ public final class Score {
 
     private final int points;
 
+    public static Score score(final int points) {
+	return new Score(points);
+    }
+
     public Score(final int aPoints) {
 	points = aPoints;
     }

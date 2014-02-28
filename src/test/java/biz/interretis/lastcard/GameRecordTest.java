@@ -1,5 +1,6 @@
 package biz.interretis.lastcard;
 
+import static biz.interretis.lastcard.Score.score;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -7,17 +8,17 @@ import org.junit.Test;
 public class GameRecordTest {
 
     // given
-    final Player marek = new Player("Marek");
-    final Player sznyc = new Player("Sznyc");
-    final Player jam = new Player("Jam");
-    final Player punx = new Player("Punx");
-    final Player kefir = new Player("Kefir");
+    private static final Player MAREK = new Player("Marek");
+    private static final Player SZNYC = new Player("Sznyc");
+    private static final Player JAM = new Player("Jam");
+    private static final Player PUNX = new Player("Punx");
+    private static final Player KEFIR = new Player("Kefir");
 
     @Test
     public void at_the_begining_all_players_score_zero()
     {
 	// when
-	final Game game = new Game(marek, sznyc, jam, punx, kefir);
+	final Game game = new Game(MAREK, SZNYC, JAM, PUNX, KEFIR);
 
 	// then
 	for (final Player player : game.players()) {
@@ -30,16 +31,16 @@ public class GameRecordTest {
     public void after_first_deal_scores_are_remembered()
     {
 	// given
-	final Game game = new Game(marek, sznyc, jam);
+	final Game game = new Game(MAREK, SZNYC, JAM);
 
 	// when
-	game.addPoints(marek, new Score(5));
-	game.addPoints(sznyc, new Score(10));
-	game.addPoints(jam, new Score(15));
+	game.addPoints(MAREK, score(5));
+	game.addPoints(SZNYC, score(10));
+	game.addPoints(JAM, score(15));
 
 	// then
-	assertEquals(new Score(5), game.score(marek));
-	assertEquals(new Score(10), game.score(sznyc));
-	assertEquals(new Score(15), game.score(jam));
+	assertEquals(score(5), game.score(MAREK));
+	assertEquals(score(10), game.score(SZNYC));
+	assertEquals(score(15), game.score(JAM));
     }
 }
