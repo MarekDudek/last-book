@@ -2,7 +2,9 @@ package biz.interretis.lastcard;
 
 import java.util.Objects;
 
-public final class Score {
+import com.google.common.collect.ComparisonChain;
+
+public final class Score implements Comparable<Score> {
 
     private final int points;
 
@@ -38,5 +40,10 @@ public final class Score {
 	}
 	final Score other = (Score) object;
 	return Objects.equals(points, other.points);
+    }
+
+    @Override
+    public int compareTo(final Score other) {
+	return ComparisonChain.start().compare(points, other.points).result();
     }
 }

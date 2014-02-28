@@ -43,4 +43,20 @@ public class GameRecordTest {
 	assertEquals(score(10), game.score(SZNYC));
 	assertEquals(score(15), game.score(JAM));
     }
+
+    @Test
+    public void player_with_highest_score_deals()
+    {
+	// given
+	final Game game = new Game(MAREK, SZNYC, JAM);
+
+	// when
+	game.addPoints(MAREK, score(5));
+	game.addPoints(SZNYC, score(10));
+	game.addPoints(JAM, score(15));
+
+	// then
+	final Player dealer = game.dealer();
+	assertEquals(JAM, dealer);
+    }
 }

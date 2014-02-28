@@ -1,5 +1,6 @@
 package biz.interretis.lastcard;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -31,5 +32,20 @@ public class Game {
 	final Score currentScore = scores.get(player);
 	final Score newScore = currentScore.increasedBy(addedPoints);
 	scores.put(player, newScore);
+    }
+
+    public Player dealer() {
+	final Iterator<Player> players = scores.keySet().iterator();
+	Player dealer = players.next();
+	Score highScore = scores.get(dealer);
+	while (players.hasNext()) {
+	    final Player player = players.next();
+	    final Score score = scores.get(player);
+	    if (score.compareTo(highScore) > 0) {
+		dealer = player;
+		highScore = score;
+	    }
+	}
+	return dealer;
     }
 }
