@@ -12,7 +12,7 @@ import com.google.common.collect.Maps;
 
 public class Game
 {
-    private Map<Player, LinkedList<Score>> scores;
+    private final Map<Player, LinkedList<Score>> scores;
 
     public Game(final Player... players)
     {
@@ -52,7 +52,7 @@ public class Game
 
     public Player dealer()
     {
-	final Iterator<Player> players = scores.keySet().iterator();
+	final Iterator<Player> players = players().iterator();
 	return dealer(players.next(), players);
     }
 
@@ -60,14 +60,14 @@ public class Game
     {
 	if (rest.hasNext()) {
 	    final Player next = rest.next();
-	    final Player dealer = playerWithMorePoints(current, next);
+	    final Player dealer = playerWithHigherScore(current, next);
 	    return dealer(dealer, rest);
 	} else {
 	    return current;
 	}
     }
 
-    private Player playerWithMorePoints(final Player first, final Player second)
+    private Player playerWithHigherScore(final Player first, final Player second)
     {
 	if (score(first).compareTo(score(second)) > 0) {
 	    return first;
