@@ -1,9 +1,13 @@
-package biz.interretis.lastcard;
+package biz.interretis.lastbook;
 
-import static biz.interretis.lastcard.Score.score;
+import static biz.interretis.lastbook.Score.score;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import biz.interretis.lastbook.Game;
+import biz.interretis.lastbook.Player;
+import biz.interretis.lastbook.Score;
 
 import com.google.common.collect.Lists;
 

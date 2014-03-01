@@ -1,4 +1,4 @@
-package biz.interretis.lastcard;
+package biz.interretis.lastbook;
 
 import java.util.Iterator;
 import java.util.List;
