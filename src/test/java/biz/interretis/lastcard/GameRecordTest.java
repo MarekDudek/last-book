@@ -59,4 +59,25 @@ public class GameRecordTest {
 	final Player dealer = game.dealer();
 	assertEquals(JAM, dealer);
     }
+
+    @Test
+    public void points_from_all_previous_deas_are_summed_up()
+    {
+	// given
+	final Game game = new Game(MAREK, SZNYC, JAM);
+
+	// when
+	game.addPoints(MAREK, score(5));
+	game.addPoints(SZNYC, score(10));
+	game.addPoints(JAM, score(15));
+
+	game.addPoints(MAREK, score(20));
+	game.addPoints(SZNYC, score(18));
+	game.addPoints(JAM, score(16));
+
+	// then
+	assertEquals(score(25), game.score(MAREK));
+	assertEquals(score(28), game.score(SZNYC));
+	assertEquals(score(31), game.score(JAM));
+    }
 }
