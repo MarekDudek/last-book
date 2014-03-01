@@ -4,19 +4,19 @@ import java.util.Objects;
 
 import com.google.common.collect.ComparisonChain;
 
-public final class Score implements Comparable<Score> {
-
-    private final int points;
+public final class Score implements Comparable<Score>
+{
+    public static final Score ZERO = new Score(0);
 
     public static Score score(final int points) {
 	return new Score(points);
     }
 
-    public Score(final int aPoints) {
+    private Score(final int aPoints) {
 	points = aPoints;
     }
 
-    public static final Score ZERO = new Score(0);
+    private final int points;
 
     public Score increasedBy(final Score added) {
 	return new Score(points + added.points);

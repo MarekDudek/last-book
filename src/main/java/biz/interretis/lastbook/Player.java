@@ -4,13 +4,14 @@ import java.util.Objects;
 
 import com.google.common.base.Preconditions;
 
-public final class Player {
-
-    private final String name;
+public final class Player
+{
 
     public Player(final String aName) {
 	name = Preconditions.checkNotNull(aName);
     }
+
+    private final String name;
 
     @Override
     public int hashCode() {
