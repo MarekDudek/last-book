@@ -2,12 +2,14 @@ package biz.interretis.lastcard;
 
 import java.util.Objects;
 
+import com.google.common.base.Preconditions;
+
 public final class Player {
 
     private final String name;
 
     public Player(final String aName) {
-	name = aName;
+	name = Preconditions.checkNotNull(aName);
     }
 
     @Override

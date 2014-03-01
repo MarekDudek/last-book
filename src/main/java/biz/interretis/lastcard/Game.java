@@ -17,6 +17,7 @@ public class Game {
 	for (final Player player : players) {
 	    scores.put(player, Score.ZERO);
 	}
+	Preconditions.checkArgument(scores.size() >= 2, "Game needs at least two players");
 	Preconditions.checkArgument(players.length == scores.size(), "Players must be unique");
     }
 
@@ -28,10 +29,10 @@ public class Game {
 	return scores.get(player);
     }
 
-    public void addPoints(final Player player, final Score addedPoints) {
-	final Score currentScore = scores.get(player);
-	final Score newScore = currentScore.increasedBy(addedPoints);
-	scores.put(player, newScore);
+    public void addPoints(final Player player, final Score points) {
+	final Score previous = scores.get(player);
+	final Score current = previous.increasedBy(points);
+	scores.put(player, current);
     }
 
     public Player dealer() {
