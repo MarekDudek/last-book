@@ -1,6 +1,7 @@
 package biz.interretis.lastbook;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,51 +12,57 @@ import com.google.common.collect.Maps;
 
 public class Game {
 
-    private Map<Player, Score> currentScores;
-    private Map<Player, List<Score>> history;
+    private Map<Player, LinkedList<Score>> scores;
 
-    public Game(final Player... players) {
-	currentScores = Maps.newLinkedHashMap();
-	history = Maps.newLinkedHashMap();
+    public Game(final Player... players)
+    {
+	scores = Maps.newLinkedHashMap();
 	for (final Player player : players) {
-	    currentScores.put(player, Score.ZERO);
-	    history.put(player, Lists.<Score> newLinkedList());
+	    scores.put(player, Lists.<Score> newLinkedList());
 	}
-	Preconditions.checkArgument(currentScores.size() >= 2, "Game needs at least two players");
-	Preconditions.checkArgument(players.length == currentScores.size(), "Players must be unique");
+	Preconditions.checkArgument(scores.size() >= 2, "Game needs at least two players");
+	Preconditions.checkArgument(players.length == scores.size(), "Players must be unique");
     }
 
-    public List<Player> players() {
-	return ImmutableList.copyOf(currentScores.keySet());
+    public List<Player> players()
+    {
+	return ImmutableList.copyOf(scores.keySet());
     }
 
-    public Score score(final Player player) {
-	return currentScores.get(player);
+    public Score score(final Player player)
+    {
+	final LinkedList<Score> history = scores.get(player);
+	if (history.isEmpty()) {
+	    return Score.ZERO;
+	}
+	return history.getLast();
     }
 
-    public void addPoints(final Player player, final Score points) {
-	final Score previous = currentScores.get(player);
+    public List<Score> scoreHistory(final Player player)
+    {
+	return ImmutableList.copyOf(scores.get(player));
+    }
+
+    public void addPoints(final Player player, final Score points)
+    {
+	final Score previous = score(player);
 	final Score current = previous.increasedBy(points);
-	currentScores.put(player, current);
-	history.get(player).add(current);
+	scores.get(player).add(current);
     }
 
-    public Player dealer() {
-	final Iterator<Player> players = currentScores.keySet().iterator();
+    public Player dealer()
+    {
+	final Iterator<Player> players = scores.keySet().iterator();
 	Player dealer = players.next();
-	Score highScore = currentScores.get(dealer);
+	Score highScore = score(dealer);
 	while (players.hasNext()) {
 	    final Player player = players.next();
-	    final Score score = currentScores.get(player);
+	    final Score score = score(player);
 	    if (score.compareTo(highScore) > 0) {
 		dealer = player;
 		highScore = score;
 	    }
 	}
 	return dealer;
-    }
-
-    public List<Score> getScoreHistory(final Player player) {
-	return ImmutableList.copyOf(history.get(player));
     }
 }

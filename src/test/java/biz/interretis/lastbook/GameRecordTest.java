@@ -33,6 +33,18 @@ public class GameRecordTest {
 	}
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void at_least_two_players_are_neccessary()
+    {
+	new Game(SZNYC);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void players_must_be_unique()
+    {
+	new Game(MAREK, SZNYC, SZNYC);
+    }
+
     @Test
     public void after_first_deal_scores_are_remembered()
     {
@@ -111,8 +123,8 @@ public class GameRecordTest {
 	game.addPoints(JAM, score(4));
 
 	// then
-	assertEquals(Lists.newArrayList(score(5), score(25), score(27)), game.getScoreHistory(MAREK));
-	assertEquals(Lists.newArrayList(score(10), score(28), score(31)), game.getScoreHistory(SZNYC));
-	assertEquals(Lists.newArrayList(score(15), score(31), score(35)), game.getScoreHistory(JAM));
+	assertEquals(Lists.newArrayList(score(5), score(25), score(27)), game.scoreHistory(MAREK));
+	assertEquals(Lists.newArrayList(score(10), score(28), score(31)), game.scoreHistory(SZNYC));
+	assertEquals(Lists.newArrayList(score(15), score(31), score(35)), game.scoreHistory(JAM));
     }
 }
