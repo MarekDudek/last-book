@@ -12,13 +12,13 @@ import com.google.common.collect.Maps;
 
 public class Game
 {
-    private final Map<Player, LinkedList<Score>> scores;
+    private final Map<Player, LinkedList<DealResult>> scores;
 
     public Game(final Player... players)
     {
 	scores = Maps.newLinkedHashMap();
 	for (final Player player : players) {
-	    scores.put(player, Lists.<Score> newLinkedList());
+	    scores.put(player, Lists.<DealResult> newLinkedList());
 	}
 	Preconditions.checkArgument(scores.size() >= 2, "Game needs at least two players");
 	Preconditions.checkArgument(players.length == scores.size(), "Players must be unique");
@@ -31,14 +31,20 @@ public class Game
 
     public Score score(final Player player)
     {
-	final LinkedList<Score> history = scores.get(player);
+	final LinkedList<DealResult> history = scores.get(player);
 	if (history.isEmpty()) {
 	    return Score.ZERO;
 	}
-	return history.getLast();
+	final List<DealResult> reversedHistory = Lists.reverse(history);
+	for (final DealResult result : reversedHistory) {
+	    if (result instanceof Score) {
+		return (Score) result;
+	    }
+	}
+	return Score.ZERO;
     }
 
-    public List<Score> scoreHistory(final Player player)
+    public List<DealResult> scoreHistory(final Player player)
     {
 	return ImmutableList.copyOf(scores.get(player));
     }
@@ -48,6 +54,11 @@ public class Game
 	final Score previous = score(player);
 	final Score current = previous.increasedBy(points);
 	scores.get(player).add(current);
+    }
+
+    public void designateWinner(final Player player)
+    {
+	scores.get(player).add(Winner.WINNER);
     }
 
     public Player dealer()

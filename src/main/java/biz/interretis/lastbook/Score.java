@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.common.collect.ComparisonChain;
 
-public final class Score implements Comparable<Score>
+public final class Score implements DealResult, Comparable<Score>
 {
     public static final Score ZERO = new Score(0);
 

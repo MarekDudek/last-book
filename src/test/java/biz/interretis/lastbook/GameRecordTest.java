@@ -127,4 +127,16 @@ public class GameRecordTest {
 	assertEquals(Lists.newArrayList(score(10), score(28), score(31)), game.scoreHistory(SZNYC));
 	assertEquals(Lists.newArrayList(score(15), score(31), score(35)), game.scoreHistory(JAM));
     }
+
+    @Test
+    public void there_must_be_the_winner_of_every_deal()
+    {
+	// given
+	final Game game = new Game(MAREK, SZNYC, JAM);
+
+	// when
+	game.addPoints(MAREK, score(5));
+	game.addPoints(SZNYC, score(10));
+	game.designateWinner(JAM);
+    }
 }
