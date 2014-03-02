@@ -1,6 +1,7 @@
 package biz.interretis.lastbook;
 
 import static biz.interretis.lastbook.Score.score;
+import static biz.interretis.lastbook.Winner.WINNER;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -52,12 +53,12 @@ public class GameRecordTest {
 	final Game game = new Game(MAREK, SZNYC, JAM);
 
 	// when
-	game.addPoints(MAREK, score(5));
+	game.winner(MAREK);
 	game.addPoints(SZNYC, score(10));
 	game.addPoints(JAM, score(15));
 
 	// then
-	assertEquals(score(5), game.score(MAREK));
+	assertEquals(score(0), game.score(MAREK));
 	assertEquals(score(10), game.score(SZNYC));
 	assertEquals(score(15), game.score(JAM));
     }
@@ -85,22 +86,22 @@ public class GameRecordTest {
 	final Game game = new Game(MAREK, SZNYC, JAM);
 
 	// when
-	game.addPoints(MAREK, score(5));
+	game.winner(MAREK);
 	game.addPoints(SZNYC, score(10));
 	game.addPoints(JAM, score(15));
 
 	game.addPoints(MAREK, score(20));
-	game.addPoints(SZNYC, score(18));
+	game.winner(SZNYC);
 	game.addPoints(JAM, score(16));
 
 	game.addPoints(MAREK, score(2));
 	game.addPoints(SZNYC, score(3));
-	game.addPoints(JAM, score(4));
+	game.winner(JAM);
 
 	// then
-	assertEquals(score(27), game.score(MAREK));
-	assertEquals(score(31), game.score(SZNYC));
-	assertEquals(score(35), game.score(JAM));
+	assertEquals(score(22), game.score(MAREK));
+	assertEquals(score(13), game.score(SZNYC));
+	assertEquals(score(31), game.score(JAM));
     }
 
     @Test
@@ -110,22 +111,22 @@ public class GameRecordTest {
 	final Game game = new Game(MAREK, SZNYC, JAM);
 
 	// when
-	game.addPoints(MAREK, score(5));
+	game.winner(MAREK);
 	game.addPoints(SZNYC, score(10));
 	game.addPoints(JAM, score(15));
 
 	game.addPoints(MAREK, score(20));
-	game.addPoints(SZNYC, score(18));
+	game.winner(SZNYC);
 	game.addPoints(JAM, score(16));
 
 	game.addPoints(MAREK, score(2));
 	game.addPoints(SZNYC, score(3));
-	game.addPoints(JAM, score(4));
+	game.winner(JAM);
 
 	// then
-	assertEquals(Lists.newArrayList(score(5), score(25), score(27)), game.scoreHistory(MAREK));
-	assertEquals(Lists.newArrayList(score(10), score(28), score(31)), game.scoreHistory(SZNYC));
-	assertEquals(Lists.newArrayList(score(15), score(31), score(35)), game.scoreHistory(JAM));
+	assertEquals(Lists.newArrayList(WINNER, score(20), score(22)), game.scoreHistory(MAREK));
+	assertEquals(Lists.newArrayList(score(10), WINNER, score(13)), game.scoreHistory(SZNYC));
+	assertEquals(Lists.newArrayList(score(15), score(31), WINNER), game.scoreHistory(JAM));
     }
 
     @Test
@@ -137,6 +138,6 @@ public class GameRecordTest {
 	// when
 	game.addPoints(MAREK, score(5));
 	game.addPoints(SZNYC, score(10));
-	game.designateWinner(JAM);
+	game.winner(JAM);
     }
 }

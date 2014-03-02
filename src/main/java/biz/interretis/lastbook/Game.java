@@ -31,11 +31,7 @@ public class Game
 
     public Score score(final Player player)
     {
-	final LinkedList<DealResult> history = scores.get(player);
-	if (history.isEmpty()) {
-	    return Score.ZERO;
-	}
-	final List<DealResult> reversedHistory = Lists.reverse(history);
+	final List<DealResult> reversedHistory = Lists.reverse(scores.get(player));
 	for (final DealResult result : reversedHistory) {
 	    if (result instanceof Score) {
 		return (Score) result;
@@ -56,7 +52,7 @@ public class Game
 	scores.get(player).add(current);
     }
 
-    public void designateWinner(final Player player)
+    public void winner(final Player player)
     {
 	scores.get(player).add(Winner.WINNER);
     }
